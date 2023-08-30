@@ -1,23 +1,29 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 class AddAssetController extends GetxController {
-  //TODO: Implement AddAssetController
+  RxBool isLoading = false.obs;
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  Future<Map<String, dynamic>> addAsset(Map<String, dynamic> data) async {
+    try {
+      var hasil = await firestore.collection("assets").add(data);
+      await firestore.collection("assets").doc(hasil.id).update({
+        "assetId": hasil.id,
+      });
+
+      return {
+        "error": false,
+        "message": "Berhasil menambahkan data asset.",
+      };
+    } catch (e) {
+      // print(e);
+      // error general
+      return {
+        "error": true,
+        "message": "Gagal menambahkan data asset.",
+      };
+    }
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

@@ -24,7 +24,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.addAsset,
-      page: () => const AddAssetView(),
+      page: () => AddAssetView(),
       binding: AddAssetBinding(),
     ),
     GetPage(
