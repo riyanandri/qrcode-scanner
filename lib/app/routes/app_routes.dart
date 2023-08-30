@@ -3,10 +3,16 @@ part of 'app_pages.dart';
 
 abstract class Routes {
   Routes._();
-  static const HOME = _Paths.HOME;
+  static const home = _Paths.home;
+  static const addAsset = _Paths.addAsset;
+  static const assets = _Paths.assets;
+  static const detailAsset = _Paths.detailAsset;
 }
 
 abstract class _Paths {
   _Paths._();
-  static const HOME = '/home';
+  static const home = '/home';
+  static const addAsset = '/add-asset';
+  static const assets = '/assets';
+  static const detailAsset = '/detail-asset';
 }
