@@ -11,7 +11,7 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('HomeView'),
+        title: const Text('Scan Aset DP4KB'),
         centerTitle: true,
       ),
       body: GridView.builder(
@@ -29,12 +29,12 @@ class HomeView extends GetView<HomeController> {
 
           switch (index) {
             case 0:
-              title = "Tambah Asset";
+              title = "Tambah Aset";
               icon = Icons.post_add_rounded;
               onTap = () => Get.toNamed(Routes.addAsset);
               break;
             case 1:
-              title = "Data Asset";
+              title = "Data Aset";
               icon = Icons.list_alt_outlined;
               onTap = () => Get.toNamed(Routes.assets);
               break;

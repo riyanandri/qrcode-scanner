@@ -34,7 +34,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.detailAsset,
-      page: () => const DetailAssetView(),
+      page: () => DetailAssetView(),
       binding: DetailAssetBinding(),
     ),
   ];
