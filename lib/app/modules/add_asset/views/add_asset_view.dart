@@ -1,6 +1,10 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../controllers/add_asset_controller.dart';
 
@@ -15,6 +19,8 @@ class AddAssetView extends GetView<AddAssetController> {
   final TextEditingController brandC = TextEditingController();
   final TextEditingController condC = TextEditingController();
 
+  String imageUrl = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,6 +31,30 @@ class AddAssetView extends GetView<AddAssetController> {
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
+          IconButton(
+            onPressed: () async {
+              ImagePicker imagePicker = ImagePicker();
+              XFile? file =
+                  await imagePicker.pickImage(source: ImageSource.camera);
+
+              if (file == null) return;
+
+              String uniqueFileName =
+                  DateTime.now().millisecondsSinceEpoch.toString();
+
+              Reference referenceRoot = FirebaseStorage.instance.ref();
+              Reference referenceDirImages = referenceRoot.child('images');
+
+              Reference referenceImageToUpload =
+                  referenceDirImages.child(uniqueFileName);
+
+              try {
+                await referenceImageToUpload.putFile(File(file.path));
+                imageUrl = await referenceImageToUpload.getDownloadURL();
+              } catch (e) {}
+            },
+            icon: const Icon(Icons.camera_alt),
+          ),
           TextField(
             autocorrect: false,
             controller: codeC,
@@ -125,6 +155,9 @@ class AddAssetView extends GetView<AddAssetController> {
           ElevatedButton(
             onPressed: () async {
               if (controller.isLoading.isFalse) {
+                if (imageUrl.isEmpty) {
+                  Get.snackbar("Error", "Anda belum upload foto.");
+                }
                 if (codeC.text.isNotEmpty &&
                     nameC.text.isNotEmpty &&
                     yearC.text.isNotEmpty &&
@@ -143,6 +176,7 @@ class AddAssetView extends GetView<AddAssetController> {
                     "room": roomC.text,
                     "brand": brandC.text,
                     "cond": condC.text,
+                    "image": imageUrl,
                   });
                   controller.isLoading(false);
 

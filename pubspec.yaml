@@ -9,11 +9,16 @@ dependencies:
   cloud_firestore: ^4.9.0
   cupertino_icons: ^1.0.2
   firebase_core: ^2.15.1
+  firebase_storage: ^11.2.7
   flutter:
     sdk: flutter
   flutter_barcode_scanner: ^2.0.0
   flutter_launcher_icons: ^0.13.1
   get: 4.6.5
+  image_picker: ^1.0.4
+  open_file: ^3.2.1
+  path_provider: ^2.0.11
+  pdf: ^3.3.0
   qr_flutter: ^4.1.0
 
 dev_dependencies:
@@ -24,8 +29,11 @@ dev_dependencies:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: false
-  image_path: "android/app/src/main/res/icon.png"
+  image_path: "assets/img/icon.png"
   min_sdk_android: 31 # android min sdk min:16, default 21
 
 flutter:
+  assets:
+    - assets/fonts/open-sans.ttf
+    - assets/fonts/courier.ttf
   uses-material-design: true

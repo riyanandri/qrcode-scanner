@@ -61,10 +61,33 @@ class HomeView extends GetView<HomeController> {
               };
               break;
             case 3:
-              title = "Scan QR";
+              title = "Katalog";
               icon = Icons.document_scanner_outlined;
               onTap = () {
-                print("Export Excel");
+                controller.downloadPdf();
+                // showModalBottomSheet(
+                //     context: context,
+                //     builder: (context) {
+                //       return Column(
+                //         mainAxisSize: MainAxisSize.min,
+                //         children: <Widget>[
+                //           ListTile(
+                //             leading: const Icon(Icons.photo),
+                //             title: const Text('Download PDF'),
+                //             onTap: () {
+                //               controller.downloadPdf();
+                //             },
+                //           ),
+                //           ListTile(
+                //             leading: const Icon(Icons.music_note),
+                //             title: const Text('Download CSV'),
+                //             onTap: () {
+                //               Navigator.pop(context);
+                //             },
+                //           ),
+                //         ],
+                //       );
+                //     });
               };
               break;
           }
