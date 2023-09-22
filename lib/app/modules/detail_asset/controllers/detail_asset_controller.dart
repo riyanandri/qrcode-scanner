@@ -17,6 +17,7 @@ class DetailAssetController extends GetxController {
         "room": data["room"],
         "brand": data["brand"],
         "cond": data["cond"],
+        "image": data["image"],
       });
 
       return {

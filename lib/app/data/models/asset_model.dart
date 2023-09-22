@@ -8,6 +8,7 @@ class AssetModel {
   final String room;
   final String type;
   final String year;
+  final String image;
 
   AssetModel({
     required this.assetId,
@@ -19,6 +20,7 @@ class AssetModel {
     required this.room,
     required this.type,
     required this.year,
+    required this.image,
   });
 
   factory AssetModel.fromJson(Map<String, dynamic> json) => AssetModel(
@@ -31,6 +33,7 @@ class AssetModel {
         room: json["room"] ?? "",
         type: json["type"] ?? "",
         year: json["year"] ?? "",
+        image: json["image"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {
@@ -43,5 +46,6 @@ class AssetModel {
         "room": room,
         "type": type,
         "year": year,
+        "image": image,
       };
 }

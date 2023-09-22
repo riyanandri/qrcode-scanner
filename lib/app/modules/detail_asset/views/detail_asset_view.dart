@@ -54,6 +54,20 @@ class DetailAssetView extends GetView<DetailAssetController> {
             ],
           ),
           const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 200,
+                width: 200,
+                child: Image.network(
+                  asset.image,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
           TextField(
             autocorrect: false,
             controller: codeC,
