@@ -1,6 +1,10 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:qrcode_scanner/app/data/models/asset_model.dart';
 
@@ -22,6 +26,8 @@ class DetailAssetView extends GetView<DetailAssetController> {
 
   @override
   Widget build(BuildContext context) {
+    String imageUrl = '';
+
     codeC.text = asset.code;
     nameC.text = asset.name;
     yearC.text = asset.year;
@@ -66,6 +72,31 @@ class DetailAssetView extends GetView<DetailAssetController> {
                 ),
               ),
             ],
+          ),
+          const SizedBox(height: 10),
+          IconButton(
+            onPressed: () async {
+              ImagePicker imagePicker = ImagePicker();
+              XFile? file =
+                  await imagePicker.pickImage(source: ImageSource.camera);
+
+              if (file == null) return;
+
+              String uniqueFileName =
+                  DateTime.now().millisecondsSinceEpoch.toString();
+
+              // Reference referenceRoot = FirebaseStorage.instance.ref();
+              // Reference referenceDirImages = referenceRoot.child('images');
+
+              Reference referenceImageToUpload =
+                  FirebaseStorage.instance.refFromURL(asset.image);
+
+              try {
+                await referenceImageToUpload.putFile(File(file.path));
+                imageUrl = await referenceImageToUpload.getDownloadURL();
+              } catch (e) {}
+            },
+            icon: const Icon(Icons.camera_alt),
           ),
           const SizedBox(height: 20),
           TextField(
@@ -169,6 +200,9 @@ class DetailAssetView extends GetView<DetailAssetController> {
           ElevatedButton(
             onPressed: () async {
               if (controller.isLoading.isFalse) {
+                if (imageUrl.isEmpty) {
+                  Get.snackbar("Error", "Anda belum upload foto.");
+                }
                 if (nameC.text.isNotEmpty &&
                     yearC.text.isNotEmpty &&
                     typeC.text.isNotEmpty &&
@@ -186,6 +220,7 @@ class DetailAssetView extends GetView<DetailAssetController> {
                     "room": roomC.text,
                     "brand": brandC.text,
                     "cond": condC.text,
+                    "image": imageUrl,
                   });
                   controller.isLoading(false);
 

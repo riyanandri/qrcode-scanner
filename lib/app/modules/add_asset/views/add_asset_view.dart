@@ -19,10 +19,9 @@ class AddAssetView extends GetView<AddAssetController> {
   final TextEditingController brandC = TextEditingController();
   final TextEditingController condC = TextEditingController();
 
-  String imageUrl = '';
-
   @override
   Widget build(BuildContext context) {
+    String imageUrl = "";
     return Scaffold(
       appBar: AppBar(
         title: const Text('Tambah Data Asset'),
